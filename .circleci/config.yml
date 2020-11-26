@@ -20,7 +20,23 @@ jobs:
       - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
       - run: composer install --working-dir=/home/circleci/project/testproject/api/vendor/lemurro/api-core
       # prepare the database
-      - run: mysql -u root lemurro < /home/circleci/project/testproject/api/database.sql
+      - run:
+        # Our primary container isn't MYSQL so run a sleep command until it's ready.
+        name: Waiting for MySQL to be ready
+        command: |
+          for i in `seq 1 10`;
+          do
+            nc -z 127.0.0.1 3306 && echo Success && exit 0
+            echo -n .
+            sleep 1
+          done
+          echo Failed waiting for MySQL && exit 1
+      - run:
+        name: Install MySQL CLI; Import dummy data; run an example query
+        command: |
+          sudo apt install default-mysql-client
+          mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.sql
+          mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
       # run server
       - run: php -S 127.0.0.1:8000 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
       # run tests
