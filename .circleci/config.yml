@@ -28,7 +28,10 @@ jobs:
       # run server
       - run: php -S 127.0.0.1:8000 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
       # prepare tests
+      - run: ls /home/circleci/project/testproject/api/tests
       - run: php /home/circleci/project/testproject/api/vendor/bin/codecept bootstrap
+      - run: cp api.suite.dist.yml api.suite.yml
+      - run: ls /home/circleci/project/testproject/api/tests
       # run tests
       - run: php /home/circleci/project/testproject/api/vendor/bin/codecept run api
-      - run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
+      #- run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
