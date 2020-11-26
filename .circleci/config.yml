@@ -15,20 +15,15 @@ jobs:
       - run: sudo apt update
       - run: sudo docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
       - run: sudo docker-php-ext-install zip pdo_mysql
-      # set variables
-      - run: echo "export PROJECT_NAME=testproject" >> $BASH_ENV
-      - run: echo "export PROJECT_FOLDER=/home/circleci/project/testproject" >> $BASH_ENV
       # install lemurro
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
-      - run: ~/.composer/vendor/bin/lemurro new ${PROJECT_NAME} --lv=2.0 --api --skip --silent
-      - run: cd ${PROJECT_FOLDER}/api/vendor/lemurro/api-core
-      - run: ls
-      - run: composer install
+      - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
+      - run: composer install --working-dir=$CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/lemurro/api-core
       # prepare the database
       - run: mysql -e 'CREATE DATABASE IF NOT EXISTS lemurro;'
-      - run: mysql -u root lemurro < ${PROJECT_FOLDER}/api/database.sql
+      - run: mysql -u root lemurro < $CIRCLE_WORKING_DIRECTORY/testproject/api/database.sql
       # run server
-      - run: php -S 127.0.0.1:8000 -t ${PROJECT_FOLDER}/api/public > /dev/null 2>&1 &
+      - run: php -S 127.0.0.1:8000 -t $CIRCLE_WORKING_DIRECTORY/testproject/api/public > /dev/null 2>&1 &
       # run tests
-      - run: php ${PROJECT_FOLDER}/api/vendor/bin/codecept run api
-      - run: php ${PROJECT_FOLDER}/api/vendor/lemurro/api-core/vendor/bin/codecept run api
+      - run: php $CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/bin/codecept run api
+      - run: php $CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
