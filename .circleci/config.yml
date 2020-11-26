@@ -15,6 +15,9 @@ jobs:
       - run: sudo apt update
       - run: sudo docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
       - run: sudo docker-php-ext-install zip pdo_mysql
+      # install lemurro/installer
+      - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
+      - run: export PATH=$HOME/.config/composer/vendor/bin:$PATH
       # install lemurro
       - run: cd ~
       - run: lemurro new testproject --lv=2.0 --api --skip --silent
