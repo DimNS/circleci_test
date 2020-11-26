@@ -28,11 +28,12 @@ jobs:
       # run server
       - run: php -S 127.0.0.1:8000 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
       # prepare tests
-      #- run: php /home/circleci/project/testproject/api/vendor/bin/codecept bootstrap
-      #- run: php /home/circleci/project/testproject/api/vendor/bin/codecept generate:suite api
-      - run: cp /home/circleci/project/testproject/api/tests/api.suite.dist.yml /home/circleci/project/testproject/api/tests/api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/tests && cp ./api.suite.dist.yml ./api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && cp ./api.suite.dist.yml ./api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/tests && sed -i 's/lemurro\-api\.localhost/127\.0\.0\.1\:8000/g' ./api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && sed -i 's/lemurro\-api\.localhost/127\.0\.0\.1\:8000/g' ./api.suite.yml
       - run: cat /home/circleci/project/testproject/api/tests/api.suite.yml
+      - run: cat /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests/api.suite.yml
       # run tests
       - run: cd /home/circleci/project/testproject/api && php vendor/bin/codecept run api
-      #- run: php /home/circleci/project/testproject/api/vendor/bin/codecept run api
-      #- run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
+      - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core && php vendor/bin/codecept run api
