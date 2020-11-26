@@ -27,44 +27,44 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
       # configuration
       - run:
-          name: Configuration: file.yaml
+          name: "Configuration: file.yaml"
           command: |
             cd /home/circleci/project/testproject/api/Overrides/Configs
             touch ./file.yaml
             echo "file:\n  path_logs: /home/circleci/project/testproject/api/var/logs\n  path_temp: /home/circleci/project/testproject/api/var/temp\n  path_upload: /home/circleci/project/testproject/api/var/documents" > ./file.yaml
             cat ./file.yaml
       - run:
-          name: Configuration: guides.yaml
+          name: "Configuration: guides.yaml"
           command: |
             cd /home/circleci/project/testproject/api/Overrides/Configs
             touch ./guides.yaml
             echo "guides:\n  classes:\n    example: Example" > ./guides.yaml
             cat ./guides.yaml
       - run:
-          name: Configuration: [app]api.suite.yml
+          name: "Configuration: [app]api.suite.yml"
           command: |
             cd /home/circleci/project/testproject/api/tests
             cp ./api.suite.dist.yml ./api.suite.yml
             sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
             cat ./api.suite.yml
       - run:
-          name: Configuration: [core]api.suite.yml
+          name: "Configuration: [core]api.suite.yml"
           command: |
             cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests
             cp ./api.suite.dist.yml ./api.suite.yml
             sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
             cat ./api.suite.yml
       - run:
-          name: Running web server
+          name: "Running web server"
           command: php -S localhost:8000 -t /home/circleci/project/testproject/api/public
           background: true
       - run:
-          name: Tests: app
+          name: "Tests: app"
           command: |
             cd /home/circleci/project/testproject/api
             php vendor/bin/codecept run api
       - run:
-          name: Tests: core
+          name: "Tests: core"
           command: |
             cd /home/circleci/project/testproject/api/vendor/lemurro/api-core
             php vendor/bin/codecept run api
