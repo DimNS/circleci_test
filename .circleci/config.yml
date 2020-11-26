@@ -10,14 +10,14 @@ jobs:
           MYSQL_DATABASE: lemurro
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_PASSWORD: ''
-    environment:
-      PROJECT_NAME: testproject
-      PROJECT_FOLDER: /home/circleci/project/${PROJECT_NAME}
     steps:
       - checkout
       - run: sudo apt update
       - run: sudo docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
       - run: sudo docker-php-ext-install zip pdo_mysql
+      # set variables
+      - run: echo "export PROJECT_NAME=testproject" >> $BASH_ENV
+      - run: echo "export PROJECT_FOLDER=/home/circleci/project/testproject" >> $BASH_ENV
       # install lemurro
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
       - run: ~/.composer/vendor/bin/lemurro new ${PROJECT_NAME} --lv=2.0 --api --skip --silent
