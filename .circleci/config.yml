@@ -21,12 +21,15 @@ jobs:
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
       - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
       - run: composer install --working-dir=/home/circleci/project/testproject/api/vendor/lemurro/api-core
-      # prepare the database
+      # prepare database
       - run: sudo apt install default-mysql-client
       - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.sql
       - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
       # run server
       - run: php -S 127.0.0.1:8000 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
+      # prepare tests
+      - run: php /home/circleci/project/testproject/api/vendor/bin/codecept bootstrap
+      - run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept bootstrap
       # run tests
       - run: php /home/circleci/project/testproject/api/vendor/bin/codecept run api
       - run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
