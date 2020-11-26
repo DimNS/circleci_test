@@ -18,7 +18,7 @@ jobs:
       # install lemurro/installer
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
       - run: export PATH=/home/circleci/.composer/vendor/bin:$PATH
-      - run: /home/circleci/.composer/vendor/bin
+      - run: ls /home/circleci/.composer/vendor/bin
       # install lemurro
       - run: cd ~
       - run: lemurro new testproject --lv=2.0 --api --skip --silent
