@@ -26,7 +26,7 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.sql
       - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
       # run server
-      - run: sudo php -S localhost:8000 -t /home/circleci/project/testproject/api/public
+      - run: php -S localhost:8000 -t /home/circleci/project/testproject/api/public &
       # prepare tests
       - run: cd /home/circleci/project/testproject/api/tests && cp ./api.suite.dist.yml ./api.suite.yml
       - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && cp ./api.suite.dist.yml ./api.suite.yml
