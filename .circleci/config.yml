@@ -17,7 +17,8 @@ jobs:
       - run: sudo docker-php-ext-install zip pdo_mysql
       # install lemurro/installer
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
-      - run: export PATH=$HOME/.composer/vendor/bin:$PATH
+      - run: export PATH=/home/circleci/.composer/vendor/bin:$PATH
+      - run: /home/circleci/.composer/vendor/bin
       # install lemurro
       - run: cd ~
       - run: lemurro new testproject --lv=2.0 --api --skip --silent
