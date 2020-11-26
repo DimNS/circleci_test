@@ -18,11 +18,8 @@ jobs:
       # install lemurro
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
       - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
-      - run: ls /home/circleci/project/testproject
-      #- run: ls ~/testproject/api
-      #- run: ls ~/testproject/api/vendor
-      #- run: ls ~/testproject/api/vendor/lemurro
-      #- run: ls ~/testproject/api/vendor/lemurro/api-core
+      - run: ls /home/circleci/project/testproject/api
+      - run: ls /home/circleci/project/testproject/api/vendor/lemurro/api-core
       #- run: composer install --working-dir=$CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/lemurro/api-core
       # prepare the database
       #- run: mysql -u root lemurro < $CIRCLE_WORKING_DIRECTORY/testproject/api/database.sql
