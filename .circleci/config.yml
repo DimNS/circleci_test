@@ -12,7 +12,7 @@ jobs:
           MYSQL_PASSWORD: ''
     environment:
       PROJECT_NAME: testproject
-      PROJECT_FOLDER: /home/circleci/project/$PROJECT_NAME
+      PROJECT_FOLDER: /home/circleci/project/testproject
     steps:
       - checkout
       - run: sudo apt update
