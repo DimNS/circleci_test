@@ -18,13 +18,11 @@ jobs:
       # install lemurro
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
       - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
-      - run: ls /home/circleci/project/testproject/api
-      - run: ls /home/circleci/project/testproject/api/vendor/lemurro/api-core
-      #- run: composer install --working-dir=$CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/lemurro/api-core
+      - run: composer install --working-dir=/home/circleci/project/testproject/api/vendor/lemurro/api-core
       # prepare the database
-      #- run: mysql -u root lemurro < $CIRCLE_WORKING_DIRECTORY/testproject/api/database.sql
+      - run: mysql -u root lemurro < /home/circleci/project/testproject/api/database.sql
       # run server
-      #- run: php -S 127.0.0.1:8000 -t $CIRCLE_WORKING_DIRECTORY/testproject/api/public > /dev/null 2>&1 &
+      - run: php -S 127.0.0.1:8000 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
       # run tests
-      #- run: php $CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/bin/codecept run api
-      #- run: php $CIRCLE_WORKING_DIRECTORY/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
+      - run: php /home/circleci/project/testproject/api/vendor/bin/codecept run api
+      - run: php /home/circleci/project/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
