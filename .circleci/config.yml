@@ -31,14 +31,14 @@ jobs:
           working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
           command: |
             touch ./file.yaml
-            echo "file:\n  path_logs: /home/circleci/project/testproject/api/var/logs\n  path_temp: /home/circleci/project/testproject/api/var/temp\n  path_upload: /home/circleci/project/testproject/api/var/documents" > ./file.yaml
+            echo -e "file:\n  path_logs: /home/circleci/project/testproject/api/var/logs\n  path_temp: /home/circleci/project/testproject/api/var/temp\n  path_upload: /home/circleci/project/testproject/api/var/documents" > ./file.yaml
             cat ./file.yaml
       - run:
           name: "Configuration: guides.yaml"
           working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
           command: |
             touch ./guides.yaml
-            echo "guides:\n  classes:\n    example: Example" > ./guides.yaml
+            echo -e "guides:\n  classes:\n    example: Example" > ./guides.yaml
             cat ./guides.yaml
       - run:
           name: "Configuration: [app]api.suite.yml"
