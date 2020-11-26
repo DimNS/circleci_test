@@ -25,7 +25,7 @@ jobs:
       - run: sudo apt install default-mysql-client
       - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.sql
       - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
-      # run server
+      # run web server
       - run:
         name: Running web server
         command: php -S localhost:8000 -t /home/circleci/project/testproject/api/public
