@@ -30,7 +30,7 @@ jobs:
       # prepare tests
       - run: ls /home/circleci/project/testproject/api/tests
       - run: php /home/circleci/project/testproject/api/vendor/bin/codecept bootstrap
-      - run: cp api.suite.dist.yml api.suite.yml
+      - run: cp /home/circleci/project/testproject/api/tests/api.suite.dist.yml /home/circleci/project/testproject/api/tests/api.suite.yml
       - run: ls /home/circleci/project/testproject/api/tests
       # run tests
       - run: php /home/circleci/project/testproject/api/vendor/bin/codecept run api
