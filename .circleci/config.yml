@@ -28,29 +28,29 @@ jobs:
       # configuration
       - run:
           name: "Configuration: file.yaml"
+          working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
           command: |
-            cd /home/circleci/project/testproject/api/Overrides/Configs
             touch ./file.yaml
             echo "file:\n  path_logs: /home/circleci/project/testproject/api/var/logs\n  path_temp: /home/circleci/project/testproject/api/var/temp\n  path_upload: /home/circleci/project/testproject/api/var/documents" > ./file.yaml
             cat ./file.yaml
       - run:
           name: "Configuration: guides.yaml"
+          working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
           command: |
-            cd /home/circleci/project/testproject/api/Overrides/Configs
             touch ./guides.yaml
             echo "guides:\n  classes:\n    example: Example" > ./guides.yaml
             cat ./guides.yaml
       - run:
           name: "Configuration: [app]api.suite.yml"
+          working_directory: /home/circleci/project/testproject/api/tests
           command: |
-            cd /home/circleci/project/testproject/api/tests
             cp ./api.suite.dist.yml ./api.suite.yml
             sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
             cat ./api.suite.yml
       - run:
           name: "Configuration: [core]api.suite.yml"
+          working_directory: /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests
           command: |
-            cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests
             cp ./api.suite.dist.yml ./api.suite.yml
             sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
             cat ./api.suite.yml
