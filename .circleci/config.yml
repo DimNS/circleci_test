@@ -26,12 +26,12 @@ jobs:
       - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.sql
       - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
       # run server
-      - run: sudo php -S http://localhost:8080 -t /home/circleci/project/testproject/api/public > /dev/null 2>&1 &
+      - run: sudo php -S localhost:8000 -t /home/circleci/project/testproject/api/public
       # prepare tests
       - run: cd /home/circleci/project/testproject/api/tests && cp ./api.suite.dist.yml ./api.suite.yml
       - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && cp ./api.suite.dist.yml ./api.suite.yml
-      - run: cd /home/circleci/project/testproject/api/tests && sed -i 's/lemurro\-api\.localhost/localhost\:8080/g' ./api.suite.yml
-      - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && sed -i 's/lemurro\-api\.localhost/localhost\:8080/g' ./api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/tests && sed -i 's/http\:\/\/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
+      - run: cd /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests && sed -i 's/http\:\/\/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
       - run: cat /home/circleci/project/testproject/api/tests/api.suite.yml
       - run: cat /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests/api.suite.yml
       # run tests
