@@ -10,6 +10,8 @@ jobs:
           MYSQL_DATABASE: lemurro
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_PASSWORD: ''
+    environment:
+      PROJ: ~/testproject
     steps:
       - checkout
       - run: sudo apt update
@@ -17,15 +19,14 @@ jobs:
       - run: sudo docker-php-ext-install zip pdo_mysql
       # install lemurro
       - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
-      - run: cd ~
-      - run: ~/.composer/vendor/bin/lemurro new ~/testproject --lv=2.0 --api --skip --silent
-      - run: cd ~/testproject/api/vendor/lemurro/api-core
+      - run: ~/.composer/vendor/bin/lemurro new $PROJ --lv=2.0 --api --skip --silent
+      - run: cd $PROJ/api/vendor/lemurro/api-core
       - run: composer install
       # prepare the database
       - run: mysql -e 'CREATE DATABASE IF NOT EXISTS lemurro;'
-      - run: mysql -u root lemurro < ~/testproject/api/database.sql
+      - run: mysql -u root lemurro < $PROJ/api/database.sql
       # run server
-      - run: php -S 127.0.0.1:8000 -t ~/testproject/api/public > /dev/null 2>&1 &
+      - run: php -S 127.0.0.1:8000 -t $PROJ/api/public > /dev/null 2>&1 &
       # run tests
-      - run: php ~/testproject/api/vendor/bin/codecept run api
-      - run: php ~/testproject/api/vendor/lemurro/api-core/vendor/bin/codecept run api
+      - run: php $PROJ/api/vendor/bin/codecept run api
+      - run: php $PROJ/api/vendor/lemurro/api-core/vendor/bin/codecept run api
